@@ -1,0 +1,51 @@
+﻿@model AzureCosmosPlayAreaDocumentDb.Models.Course
+
+@{
+    ViewBag.Title = "Course";
+}
+
+<h2>Register a Course</h2>
+
+@using (Html.BeginForm("Create", "Courses", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Modules</label>
+            <div class="col-sm-6">
+                @Html.TextAreaFor(m => m.Modules, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.Completed) Completed?
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                @if (string.IsNullOrEmpty(Model.Id))
+                {
+                    <button type="submit" class="btn btn-primary">Register Course</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary">Update Course</button>
+                }
+                
+                <a href="@Url.Action("Index")" class="btn btn-default">Back</a>
+            </div>
+        </div>
+    </div>
+}

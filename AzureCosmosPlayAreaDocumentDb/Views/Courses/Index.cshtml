@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AzureCosmosPlayAreaDocumentDb.Models.Course>
+
+@{
+    ViewBag.Title = "Courses";
+}
+
+<h2>Courses</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Modules</th>
+            <th>Completed</th>
+            <th>Action(s)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Title</td>
+                <td>@course.Modules</td>
+                <td>@(course.Completed ? "Yes" : "No")</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = course.Id } )">Details</a>
+                    <a href="@Url.Action("Edit", new { id = course.Id })">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = course.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4>No courses found!</h4>    
+    <a class="btn btn-primary" href="@Url.Action("Create")">Create a course</a>
+}
