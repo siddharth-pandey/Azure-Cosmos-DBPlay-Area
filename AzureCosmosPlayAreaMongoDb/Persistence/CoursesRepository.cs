@@ -36,29 +36,25 @@ namespace AzureCosmosPlayAreaMongoDb.Persistence
             return collection.Find(new BsonDocument()).ToList();
         }
 
-        public async Task<Course> CreateCourseAsync(Course course)
+        public async Task CreateCourseAsync(Course course)
         {
             IMongoCollection<Course> collection = GetCollection();
 
             await collection.InsertOneAsync(course);
-
-            return course;
         }
 
-        public async Task<Course> UpdateCourseAsync(Guid id, Course course)
+        public async Task<ReplaceOneResult> UpdateCourseAsync(Guid id, Course course)
         {
             IMongoCollection<Course> collection = GetCollection();
 
-            await collection.ReplaceOneAsync(c => c.Id.Equals(id), course);
-
-            return course;
+            return await collection.ReplaceOneAsync(c => c.Id.Equals(id), course);
         }
 
-        public async Task DeleteCourseAsync(Guid id)
+        public async Task<DeleteResult> DeleteCourseAsync(Guid id)
         {
             IMongoCollection<Course> collection = GetCollection();
 
-            await collection.DeleteOneAsync(c => c.Id.Equals(id));
+            return await collection.DeleteOneAsync(c => c.Id.Equals(id));
         }
 
         private IMongoCollection<Course> GetCollection()

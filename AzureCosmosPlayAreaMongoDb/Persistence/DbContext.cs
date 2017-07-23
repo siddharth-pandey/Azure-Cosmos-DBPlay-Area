@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Authentication;
 using MongoDB.Driver;
@@ -10,7 +11,7 @@ namespace AzureCosmosPlayAreaMongoDb.Persistence
         private readonly string _username = ConfigurationManager.AppSettings.Get("CosmosDbAccountUsername");
         private readonly string _password = ConfigurationManager.AppSettings.Get("CosmosDbAccountPassword");
         private readonly string _host = ConfigurationManager.AppSettings.Get("CosmosDbAccountHost");
-        private readonly string _port = ConfigurationManager.AppSettings.Get("CosmosDbAccountPort");
+        private readonly int _port = Convert.ToInt32(ConfigurationManager.AppSettings.Get("CosmosDbAccountPort"));
         private readonly string _databaseName = ConfigurationManager.AppSettings.Get("DatabaseName");
 
         public readonly string CollectionName = ConfigurationManager.AppSettings.Get("CollectionName");
@@ -37,7 +38,7 @@ namespace AzureCosmosPlayAreaMongoDb.Persistence
         {
             var settings = new MongoClientSettings
             {
-                Server = new MongoServerAddress(_host, 10255),
+                Server = new MongoServerAddress(_host, _port),
                 UseSsl = true,
                 SslSettings = new SslSettings { EnabledSslProtocols = SslProtocols.Tls12 }
             };

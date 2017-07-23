@@ -58,7 +58,7 @@ namespace AzureCosmosPlayAreaMongoDb.Controllers
         [ActionName("Edit")]
         public ActionResult Edit(Guid id)
         {
-            if (id == null)
+            if (id == default(Guid))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -76,7 +76,7 @@ namespace AzureCosmosPlayAreaMongoDb.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(Guid id)
         {
-            if (id == null)
+            if (id == default(Guid))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
